@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 
 class EmployeesController extends Controller
 {
+
+    public function index()
+    {
+        $emp = Employees::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'employee' => $emp
+            ]
+        ]);
+    }
+
+
     public function show(string $id)
     {
         $emp = Employees::find($id);

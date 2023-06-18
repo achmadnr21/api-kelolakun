@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
+    public function index()
+    {
+        $package = Package::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'package' => $package
+            ]
+        ]);
+    }
+
     public function show(string $id)
     {
         $package = Package::find($id);

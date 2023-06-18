@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+
+    public function index()
+    {
+        $user = Users::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'user' => $user
+            ]
+        ]);
+    }
     public function show(string $id)
     {
         $user = Users::find($id);

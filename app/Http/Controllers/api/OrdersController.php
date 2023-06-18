@@ -8,6 +8,20 @@ use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
+
+
+    public function index()
+    {
+        $orders = Orders::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'order' => $orders
+            ]
+        ]);
+    }
+
+    
     public function show(string $id)
     {
         $orders = Orders::find($id);
@@ -18,5 +32,7 @@ class OrdersController extends Controller
             ]
         ]);
     }
+
+    
 }
 
