@@ -30,4 +30,89 @@ class ItemController extends Controller
             ]
         ]);
     }
+
+    public function store(Request $request){
+        $dataItem = new Item;
+        $rules = [
+            'name' => 'required',
+            'weight' => 'required'
+        ];
+        $validator = Validator:: make($request->all(),$rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors()
+            ]);
+        }
+        
+        // 'item_id',
+        // 'name',
+        // 'weight',
+        // 'price',
+        // 'category_id'
+
+        $dataItem->item_id = $request->item_id;
+        $dataItem->name = $request->name;
+        $dataItem->weight = $request->weight;
+        $dataItem->price = $request->price;
+        $dataItem->category_id = $request->category_id;
+
+        $post = $dataItem->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'insert success!'
+        ]);
+
+    }
+
+    public function update(Request $request, string $id){
+        $dataItem = Item::find($id);
+        if(empty($dataItem)){
+            return response()->json([
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 404);
+        }
+        $rules = [
+
+        ];
+        $validator = Validator:: make($request->all(),$rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors()
+            ]);
+        }
+        
+
+        $dataItem->item_id = $request->item_id;
+        $dataItem->name = $request->name;
+        $dataItem->weight = $request->weight;
+        $dataItem->price = $request->price;
+        $dataItem->category_id = $request->category_id;
+
+        $post = $dataItem->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'update success!'
+        ]);
+    }
+
+
+    public function destroy(string $id)
+    {
+         $dataItem = Item::find($id);
+        if(empty($dataItem)){
+            return response()->json([
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 404);
+        }
+
+        $post = $dataItem->delete();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'deletion success!'
+        ]);   
+    }
 }
