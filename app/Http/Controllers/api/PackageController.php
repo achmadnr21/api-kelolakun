@@ -33,8 +33,7 @@ class PackageController extends Controller
     public function store(Request $request){
         $dataPackage = new Package;
         $rules = [
-            'total_weight' => 'required',
-            'total_price' => 'required'
+
         ];
         $validator = Validator:: make($request->all(),$rules);
         if ($validator->fails()) {

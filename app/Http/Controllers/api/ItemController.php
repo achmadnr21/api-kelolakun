@@ -34,8 +34,6 @@ class ItemController extends Controller
     public function store(Request $request){
         $dataItem = new Item;
         $rules = [
-            'name' => 'required',
-            'weight' => 'required'
         ];
         $validator = Validator:: make($request->all(),$rules);
         if ($validator->fails()) {
