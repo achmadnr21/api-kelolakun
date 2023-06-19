@@ -13,8 +13,24 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+
+/*
+========== INFORMASI ==========
+employees:superadmin can insert employees:admin, employees:shipper, franchise, users.
+
+employees:superadmin can update franchise. The franchise owner have to request into the
+            company to change their data
+
+users can insert users
+
+*/
+
+
 // login
-// Route::post('/register', [\App\Http\Controllers\api\AuthController::class, 'register']);
+// Route::post('/employee/register', [\App\Http\Controllers\api\AuthController::class, 'employee_register']);
+// Route::post('/user/register', [\App\Http\Controllers\api\AuthController::class, 'user_register']);
+
 Route::post('/employee/login', [\App\Http\Controllers\api\AuthController::class, 'employee_login']);
 Route::post('/user/login', [\App\Http\Controllers\api\AuthController::class, 'user_login']);
 
@@ -22,8 +38,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/employee/logout', [\App\Http\Controllers\api\AuthController::class, 'employee_logout']);
-    Route::post('/user/logout', [\App\Http\Controllers\api\AuthController::class, 'user_logout']);
+    Route::post('/logout', [\App\Http\Controllers\api\AuthController::class, 'logout']);
+    // Route::post('/employee/logout', [\App\Http\Controllers\api\AuthController::class, 'employee_logout']);
+    // Route::post('/user/logout', [\App\Http\Controllers\api\AuthController::class, 'user_logout']);
 });
 
 
