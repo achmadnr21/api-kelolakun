@@ -145,6 +145,5 @@ class OrdersController extends Controller
             'data' => 'additem success!'
         ]);
     }
-    
 }
 

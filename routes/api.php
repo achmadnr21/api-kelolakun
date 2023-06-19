@@ -13,10 +13,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// login
+// Route::post('/register', [\App\Http\Controllers\api\AuthController::class, 'register']);
+Route::post('/employee/login', [\App\Http\Controllers\api\AuthController::class, 'employee_login']);
+Route::post('/user/login', [\App\Http\Controllers\api\AuthController::class, 'user_login']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/employee/logout', [\App\Http\Controllers\api\AuthController::class, 'employee_logout']);
+    Route::post('/user/logout', [\App\Http\Controllers\api\AuthController::class, 'user_logout']);
+});
+
 
 // FRANCHISE :: DONE
 Route::get('/franchise/index', [App\Http\Controllers\api\FranchiseController::class, 'index']);
@@ -39,6 +48,7 @@ Route::get('/order/select/{id}', [App\Http\Controllers\api\OrdersController::cla
 Route::post('/order/insert', [App\Http\Controllers\api\OrdersController::class, 'store']);
 Route::put('/order/update/{id}', [App\Http\Controllers\api\OrdersController::class, 'update']);
 Route::delete('/order/delete/{id}', [App\Http\Controllers\api\OrdersController::class, 'destroy']);
+Route::post('/order/additem', [App\Http\Controllers\api\OrdersController::class, 'addItem']);
 
 // EMPLOYEE
 Route::get('/employee', [App\Http\Controllers\api\EmployeesController::class, 'index']);
@@ -54,6 +64,7 @@ Route::post('/warehouse/insert', [App\Http\Controllers\api\WarehouseController::
 Route::put('/warehouse/update/{id}', [App\Http\Controllers\api\WarehouseController::class, 'update']);
 Route::delete('/warehouse/delete/{id}', [App\Http\Controllers\api\WarehouseController::class, 'destroy']);
 Route::post('/warehouse/additem', [App\Http\Controllers\api\WarehouseController::class, 'addItem']);
+
 // CATEGORY
 Route::get('/category', [App\Http\Controllers\api\CategoryController::class, 'index']);
 Route::get('/category/select/{id}', [App\Http\Controllers\api\CategoryController::class, 'show']);
