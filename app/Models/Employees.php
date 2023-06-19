@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 // RELATION
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Employees extends Model
+class Employees extends Authenticatable
 {
     public $timestamps = false;
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'employees';
     protected $primaryKey = 'employee_id';
@@ -23,6 +26,14 @@ class Employees extends Model
         'username',
         'password',
         'role'
+    ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     public function warehouse(): BelongsTo

@@ -52,10 +52,10 @@ class UsersController extends Controller
         // 'password',
         // 'franchise_id'
 
-        $dataUser->user_id = $request->user_id;
+        // $dataUser->user_id = $request->user_id;
         $dataUser->name = $request->name;
         $dataUser->username = $request->username;
-        $dataUser->password = $request->password;
+        $dataUser->password = bcrypt($request->password);
         $dataUser->franchise_id = $request->franchise_id;
 
         $post = $dataUser->save();

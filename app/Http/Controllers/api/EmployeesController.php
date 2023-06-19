@@ -84,13 +84,12 @@ class EmployeesController extends Controller
                 'data' => $validator->errors()
             ]);
         }
-        
 
-        $dataEmployee->franchise_id = $request->franchise_id;
+        // $dataEmployee->employee_id = $request->employee_id;
         $dataEmployee->warehouse_id = $request->warehouse_id;
         $dataEmployee->name = $request->name;
         $dataEmployee->username = $request->username;
-        $dataEmployee->password = $request->password;
+        $dataEmployee->password = bcrypt($request->password);
         $dataEmployee->role = $request->role;
         $dataEmployee->email = $request->email;
         $dataEmployee->phone_number = $request->phone_number;

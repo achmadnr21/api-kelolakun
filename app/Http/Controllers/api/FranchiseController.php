@@ -46,7 +46,7 @@ class FranchiseController extends Controller
         }
         
 
-        $dataFranchise->franchise_id = $request->franchise_id;
+        // $dataFranchise->franchise_id = $request->franchise_id;
         $dataFranchise->owner_name = $request->owner_name;
         $dataFranchise->owner_ktp = $request->owner_ktp;
         $dataFranchise->address = $request->address;
