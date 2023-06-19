@@ -34,6 +34,7 @@ class UsersController extends Controller
     public function store(Request $request){
         $dataUser = new Users;
         $rules = [
+            'name' => 'required',
             'username' => 'required',
             'password' => 'required',
             'franchise_id' => 'required'
@@ -52,6 +53,8 @@ class UsersController extends Controller
         // 'password',
         // 'franchise_id'
 
+        // user_id pas insertion gaperlu diisi karena sudah ada auto_increment dari sisi database
+        // menggunakan sequence
         // $dataUser->user_id = $request->user_id;
         $dataUser->name = $request->name;
         $dataUser->username = $request->username;
@@ -85,11 +88,11 @@ class UsersController extends Controller
             ]);
         }
 
-        $dataUser->user_id = $request->user_id;
+        // $dataUser->user_id = $request->user_id;
         $dataUser->name = $request->name;
         $dataUser->username = $request->username;
         $dataUser->password = $request->password;
-        // $dataUser->franchise_id = $request->franchise_id;
+        $dataUser->franchise_id = $request->franchise_id;
 
         $post = $dataUser->save();
         return response()->json([

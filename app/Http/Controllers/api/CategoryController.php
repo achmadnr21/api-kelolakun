@@ -46,7 +46,7 @@ class CategoryController extends Controller
         // 'category_id',
         // 'name'
 
-        $dataCategory->category_id = $request->category_id;
+        // $dataCategory->category_id = $request->category_id;
         $dataCategory->name = $request->name;
 
         $post = $dataCategory->save();
@@ -77,7 +77,7 @@ class CategoryController extends Controller
         }
         
 
-        $dataCategory->category_id = $request->category_id;
+        // $dataCategory->category_id = $id;
         $dataCategory->name = $request->name;
 
         $post = $dataCategory->save();

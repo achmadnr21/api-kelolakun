@@ -35,7 +35,13 @@ class FranchiseController extends Controller
         $dataFranchise = new Franchise;
         $rules = [
             'owner_name' => 'required',
-            'owner_ktp' => 'required'
+            'owner_ktp' => 'required',
+            'address' => 'required',
+            'geo_lat' => 'required',
+            'geo_lon' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required'
+
         ];
         $validator = Validator:: make($request->all(),$rules);
         if ($validator->fails()) {
@@ -44,7 +50,6 @@ class FranchiseController extends Controller
                 'data' => $validator->errors()
             ]);
         }
-        
 
         // $dataFranchise->franchise_id = $request->franchise_id;
         $dataFranchise->owner_name = $request->owner_name;
@@ -83,7 +88,7 @@ class FranchiseController extends Controller
         }
         
 
-        $dataFranchise->franchise_id = $request->franchise_id;
+        // $dataFranchise->franchise_id = $request->franchise_id;
         $dataFranchise->owner_name = $request->owner_name;
         $dataFranchise->owner_ktp = $request->owner_ktp;
         $dataFranchise->address = $request->address;

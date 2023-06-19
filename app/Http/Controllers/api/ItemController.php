@@ -49,7 +49,7 @@ class ItemController extends Controller
         // 'price',
         // 'category_id'
 
-        $dataItem->item_id = $request->item_id;
+        // $dataItem->item_id = $request->item_id;
         $dataItem->name = $request->name;
         $dataItem->weight = $request->weight;
         $dataItem->price = $request->price;
@@ -83,7 +83,7 @@ class ItemController extends Controller
         }
         
 
-        $dataItem->item_id = $request->item_id;
+        // $dataItem->item_id = $request->item_id;
         $dataItem->name = $request->name;
         $dataItem->weight = $request->weight;
         $dataItem->price = $request->price;

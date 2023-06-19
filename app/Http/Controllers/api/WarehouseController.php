@@ -50,7 +50,7 @@ class WarehouseController extends Controller
         // 'phone_number',
         // 'address'
 
-        $dataWarehouse->warehouse_id = $id;
+        // $dataWarehouse->warehouse_id = $id;
         $dataWarehouse->geo_lat = $request->geo_lat;
         $dataWarehouse->geo_lon = $request->geo_lon;
         $dataWarehouse->email = $request->email;
@@ -85,7 +85,7 @@ class WarehouseController extends Controller
         }
         
 
-        $dataWarehouse->warehouse_id = $id;
+        // $dataWarehouse->warehouse_id = $id;
         $dataWarehouse->geo_lat = $request->geo_lat;
         $dataWarehouse->geo_lon = $request->geo_lon;
         $dataWarehouse->email = $request->email;

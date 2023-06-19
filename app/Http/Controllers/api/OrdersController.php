@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Orders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 
 class OrdersController extends Controller
@@ -53,9 +55,9 @@ class OrdersController extends Controller
         // 'status',
         // 'cost',
         // 'user_id'
-        $dataOrders->order_id = $request->order_id;
-        $dataOrders->created_at = $request->created_at;
-        $dataOrders->modified_at = $request->modified_at;
+        // $dataOrders->order_id = $request->order_id;
+        $dataOrders->created_at = now();
+        $dataOrders->modified_at = now();
         $dataOrders->status = $request->status;
         $dataOrders->cost = $request->cost;
         $dataOrders->user_id = $request->user_id;
@@ -87,9 +89,8 @@ class OrdersController extends Controller
         }
         
 
-        $dataOrders->order_id = $request->order_id;
-        $dataOrders->created_at = $request->created_at;
-        $dataOrders->modified_at = $request->modified_at;
+        // $dataOrders->order_id =$id;
+        $dataOrders->modified_at = now();
         $dataOrders->status = $request->status;
         $dataOrders->cost = $request->cost;
         $dataOrders->user_id = $request->user_id;

@@ -52,7 +52,7 @@ class EmployeesController extends Controller
         // 'password',
         // 'role'
 
-        $dataEmployee->franchise_id = $request->franchise_id;
+        // $dataEmployee->employee_id = $request->employee_id;
         $dataEmployee->warehouse_id = $request->warehouse_id;
         $dataEmployee->name = $request->name;
         $dataEmployee->username = $request->username;

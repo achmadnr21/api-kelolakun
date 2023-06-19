@@ -47,7 +47,7 @@ class PackageController extends Controller
         // 'total_weight',
         // 'total_price'
 
-        $dataPackage->package_id = $request->package_id;
+        // $dataPackage->package_id = $request->package_id;
         $dataPackage->total_weight = $request->total_weight;
         $dataPackage->total_price = $request->total_price;
 
@@ -79,7 +79,7 @@ class PackageController extends Controller
         }
         
 
-        $dataPackage->package_id = $request->package_id;
+        // $dataPackage->package_id = $request->package_id;
         $dataPackage->total_weight = $request->total_weight;
         $dataPackage->total_price = $request->total_price;
 
