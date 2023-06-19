@@ -50,7 +50,7 @@ class WarehouseController extends Controller
         // 'phone_number',
         // 'address'
 
-        $dataWarehouse->warehouse_id = $request->warehouse_id;
+        $dataWarehouse->warehouse_id = $id;
         $dataWarehouse->geo_lat = $request->geo_lat;
         $dataWarehouse->geo_lon = $request->geo_lon;
         $dataWarehouse->email = $request->email;
@@ -85,7 +85,7 @@ class WarehouseController extends Controller
         }
         
 
-        $dataWarehouse->warehouse_id = $request->warehouse_id;
+        $dataWarehouse->warehouse_id = $id;
         $dataWarehouse->geo_lat = $request->geo_lat;
         $dataWarehouse->geo_lon = $request->geo_lon;
         $dataWarehouse->email = $request->email;
@@ -115,5 +115,36 @@ class WarehouseController extends Controller
             'status' => 'success',
             'data' => 'deletion success!'
         ]);   
+    }
+
+    public function addItem(Request $request){
+        $warehouse_available = Warehouse::find($request->warehouse_id);
+        if($warehouse_available){
+            $query = DB::table('warehouse_package_details')->update(
+                ['package_id', $request->package_id],
+                ['warehouse_id', $request->warehouse_id],
+                ['qty', $request->qty],
+                ['modified_at', now()]
+            );
+            return response()->json([
+                'status' => 'success',
+                'data' => 'additem success!'
+            ]);
+        }else{
+            $query = DB::table('warehouse_package_details')->insert(
+                ['package_id', $request->package_id],
+                ['warehouse_id', $request->warehouse_id],
+                ['qty', $request->qty],
+                ['modified_at', now()]
+            );
+            return response()->json([
+                'status' => 'success',
+                'data' => 'additem success!'
+            ]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'data' => 'additem success!'
+        ]);
     }
 }

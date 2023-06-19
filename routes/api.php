@@ -53,7 +53,7 @@ Route::get('/warehouse/select/{id}', [App\Http\Controllers\api\WarehouseControll
 Route::post('/warehouse/insert', [App\Http\Controllers\api\WarehouseController::class, 'store']);
 Route::put('/warehouse/update/{id}', [App\Http\Controllers\api\WarehouseController::class, 'update']);
 Route::delete('/warehouse/delete/{id}', [App\Http\Controllers\api\WarehouseController::class, 'destroy']);
-
+Route::post('/warehouse/additem', [App\Http\Controllers\api\WarehouseController::class, 'addItem']);
 // CATEGORY
 Route::get('/category', [App\Http\Controllers\api\CategoryController::class, 'index']);
 Route::get('/category/select/{id}', [App\Http\Controllers\api\CategoryController::class, 'show']);
@@ -74,3 +74,4 @@ Route::get('/package/select/{id}', [App\Http\Controllers\api\ItemController::cla
 Route::post('/package/insert/', [App\Http\Controllers\api\ItemController::class, 'store']);
 Route::put('/package/update/{id}', [App\Http\Controllers\api\ItemController::class, 'update']);
 Route::delete('/package/delete/{id}', [App\Http\Controllers\api\ItemController::class, 'destroy']);
+Route::post('/package/additem', [App\Http\Controllers\api\ItemController::class, 'addItem']);

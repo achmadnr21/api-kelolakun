@@ -107,4 +107,33 @@ class PackageController extends Controller
             'data' => 'deletion success!'
         ]);   
     }
+
+    public function addItem(Request $request){
+        $warehouse_available = Package::find($request->package_id);
+        if($warehouse_available){
+            $query = DB::table('package_item_details')->update(
+                ['package_id', $request->package_id],
+                ['item_id', $request->item_id],
+                ['qty', $request->qty]
+            );
+            return response()->json([
+                'status' => 'success',
+                'data' => 'additem success!'
+            ]);
+        }else{
+            $query = DB::table('package_item_details')->insert(
+                ['package_id', $request->package_id],
+                ['item_id', $request->item_id],
+                ['qty', $request->qty]
+            );
+            return response()->json([
+                'status' => 'success',
+                'data' => 'additem success!'
+            ]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'data' => 'additem success!'
+        ]);
+    }
 }
