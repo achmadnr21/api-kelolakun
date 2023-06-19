@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Employees extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
     protected $table = 'employees';

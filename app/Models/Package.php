@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Package extends Model
 {
+    public $timestamps = false;
     use HasFactory;
     protected $table = 'package';
     protected $primaryKey = 'package_id';

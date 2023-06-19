@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 class Users extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
     protected $table = 'users';

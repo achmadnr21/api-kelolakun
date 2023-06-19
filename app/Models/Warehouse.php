@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Warehouse extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
     protected $table = 'warehouse';

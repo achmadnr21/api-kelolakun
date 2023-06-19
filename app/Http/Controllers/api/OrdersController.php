@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Orders;
 use Illuminate\Http\Request;
 
+
 class OrdersController extends Controller
 {
 
@@ -31,6 +32,89 @@ class OrdersController extends Controller
                 'order' => $orders
             ]
         ]);
+    }
+
+    public function store(Request $request){
+        $dataOrders = new Orders;
+        $rules = [
+            
+        ];
+        $validator = Validator:: make($request->all(),$rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors()
+            ]);
+        }
+        
+        // 'order_id',
+        // 'created_at',
+        // 'modified_at',
+        // 'status',
+        // 'cost',
+        // 'user_id'
+        $dataOrders->order_id = $request->order_id;
+        $dataOrders->created_at = $request->created_at;
+        $dataOrders->modified_at = $request->modified_at;
+        $dataOrders->status = $request->status;
+        $dataOrders->cost = $request->cost;
+        $dataOrders->user_id = $request->user_id;
+
+        $post = $dataOrders->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'insert success!'
+        ]);
+
+    }
+
+    public function update(Request $request, string $id){
+        $dataOrders = Orders::find($id);
+        if(empty($dataOrders)){
+            return response()->json([
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 404);
+        }
+        $rules = [
+        ];
+        $validator = Validator:: make($request->all(),$rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors()
+            ]);
+        }
+        
+
+        $dataOrders->order_id = $request->order_id;
+        $dataOrders->created_at = $request->created_at;
+        $dataOrders->modified_at = $request->modified_at;
+        $dataOrders->status = $request->status;
+        $dataOrders->cost = $request->cost;
+        $dataOrders->user_id = $request->user_id;
+        $post = $dataOrders->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'update success!'
+        ]);
+    }
+
+    public function destroy(string $id)
+    {
+         $dataOrders = Orders::find($id);
+        if(empty($dataOrders)){
+            return response()->json([
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 404);
+        }
+
+        $post = $dataOrders->delete();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'deletion success!'
+        ]);   
     }
 
     

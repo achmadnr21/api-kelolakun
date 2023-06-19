@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Franchise extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
     protected $table = 'franchise';
