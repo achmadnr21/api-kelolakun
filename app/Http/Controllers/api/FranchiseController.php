@@ -72,8 +72,7 @@ class FranchiseController extends Controller
             ], 404);
         }
         $rules = [
-            'owner_name' => 'required',
-            'owner_ktp' => 'required'
+
         ];
         $validator = Validator:: make($request->all(),$rules);
         if ($validator->fails()) {

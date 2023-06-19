@@ -30,4 +30,90 @@ class WarehouseController extends Controller
             ]
         ]);
     }
+
+    public function store(Request $request){
+        $dataWarehouse = new Warehouse;
+        $rules = [
+
+        ];
+        $validator = Validator:: make($request->all(),$rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors()
+            ]);
+        }
+        // 'warehouse_id',
+        // 'geo_lat',
+        // 'geo_lon',
+        // 'email',
+        // 'phone_number',
+        // 'address'
+
+        $dataWarehouse->warehouse_id = $request->warehouse_id;
+        $dataWarehouse->geo_lat = $request->geo_lat;
+        $dataWarehouse->geo_lon = $request->geo_lon;
+        $dataWarehouse->email = $request->email;
+        $dataWarehouse->phone_number = $request->phone_number;
+        $dataWarehouse->address = $request->address;
+
+        $post = $dataWarehouse->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'insert success!'
+        ]);
+
+    }
+
+    public function update(Request $request, string $id){
+        $dataWarehouse = Warehouse::find($id);
+        if(empty($dataWarehouse)){
+            return response()->json([
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 404);
+        }
+        $rules = [
+
+        ];
+        $validator = Validator:: make($request->all(),$rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors()
+            ]);
+        }
+        
+
+        $dataWarehouse->warehouse_id = $request->warehouse_id;
+        $dataWarehouse->geo_lat = $request->geo_lat;
+        $dataWarehouse->geo_lon = $request->geo_lon;
+        $dataWarehouse->email = $request->email;
+        $dataWarehouse->phone_number = $request->phone_number;
+        $dataWarehouse->address = $request->address;
+
+        $post = $dataWarehouse->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'update success!'
+        ]);
+    }
+
+
+    public function destroy(string $id)
+    {
+         $dataWarehouse = Warehouse::find($id);
+        if(empty($dataWarehouse)){
+            return response()->json([
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 404);
+        }
+
+        $post = $dataWarehouse->delete();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'deletion success!'
+        ]);   
+    }
 }
