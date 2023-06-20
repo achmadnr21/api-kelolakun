@@ -59,36 +59,37 @@ class PackageController extends Controller
 
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $dataPackage = Package::find($id);
-        if(empty($dataPackage)){
+        if (empty($dataPackage)) {
             return response()->json([
                 'status' => 'success',
                 'data' => 'data not found'
             ], 404);
         }
-        $rules = [
 
-        ];
-        $validator = Validator:: make($request->all(),$rules);
+        $validator = Validator::make($request->all(), [
+            'total_weight' => 'sometimes|numeric',
+            'total_price' => 'sometimes|numeric'
+        ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
                 'data' => $validator->errors()
             ]);
         }
-        
 
-        // $dataPackage->package_id = $request->package_id;
-        $dataPackage->total_weight = $request->total_weight;
-        $dataPackage->total_price = $request->total_price;
+        $dataPackage->fill($request->only(['total_weight', 'total_price']));
+        $dataPackage->save();
 
-        $post = $dataPackage->save();
         return response()->json([
             'status' => 'success',
             'data' => 'update success!'
         ]);
     }
+
 
 
     public function destroy(string $id)
@@ -131,6 +132,8 @@ class PackageController extends Controller
                 'data' => 'additem success!'
             ]);
         }
+
+        
         return response()->json([
             'status' => 'success',
             'data' => 'additem success!'

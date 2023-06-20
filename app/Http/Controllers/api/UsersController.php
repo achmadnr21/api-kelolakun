@@ -69,18 +69,23 @@ class UsersController extends Controller
 
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $dataUser = Users::find($id);
-        if(empty($dataUser)){
+        if (empty($dataUser)) {
             return response()->json([
                 'status' => 'success',
                 'data' => 'data not found'
             ], 404);
         }
-        $rules = [
-            
-        ];
-        $validator = Validator:: make($request->all(),$rules);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string',
+            'username' => 'sometimes|string',
+            'password' => 'sometimes|string',
+            'franchise_id' => 'sometimes|numeric'
+        ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
@@ -88,18 +93,15 @@ class UsersController extends Controller
             ]);
         }
 
-        // $dataUser->user_id = $request->user_id;
-        $dataUser->name = $request->name;
-        $dataUser->username = $request->username;
-        $dataUser->password = $request->password;
-        $dataUser->franchise_id = $request->franchise_id;
+        $dataUser->fill($request->only(['name', 'username', 'password', 'franchise_id']));
+        $dataUser->save();
 
-        $post = $dataUser->save();
         return response()->json([
             'status' => 'success',
             'data' => 'update success!'
         ]);
     }
+
 
     public function destroy(string $id)
     {

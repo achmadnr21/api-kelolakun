@@ -64,38 +64,40 @@ class ItemController extends Controller
 
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $dataItem = Item::find($id);
-        if(empty($dataItem)){
+        if (empty($dataItem)) {
             return response()->json([
                 'status' => 'success',
                 'data' => 'data not found'
             ], 404);
         }
-        $rules = [
 
+        $rules = [
+            'name' => 'sometimes|string',
+            'weight' => 'sometimes|numeric',
+            'price' => 'sometimes|numeric',
+            'category_id' => 'sometimes|exists:categories,id'
         ];
-        $validator = Validator:: make($request->all(),$rules);
+
+        $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
                 'data' => $validator->errors()
             ]);
         }
-        
 
-        // $dataItem->item_id = $request->item_id;
-        $dataItem->name = $request->name;
-        $dataItem->weight = $request->weight;
-        $dataItem->price = $request->price;
-        $dataItem->category_id = $request->category_id;
+        $dataItem->fill($request->only(['name', 'weight', 'price', 'category_id']));
+        $dataItem->save();
 
-        $post = $dataItem->save();
         return response()->json([
             'status' => 'success',
             'data' => 'update success!'
         ]);
     }
+
 
 
     public function destroy(string $id)

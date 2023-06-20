@@ -70,36 +70,39 @@ class OrdersController extends Controller
 
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $dataOrders = Orders::find($id);
-        if(empty($dataOrders)){
+        if (empty($dataOrders)) {
             return response()->json([
                 'status' => 'success',
                 'data' => 'data not found'
             ], 404);
         }
-        $rules = [
-        ];
-        $validator = Validator:: make($request->all(),$rules);
+
+        $validator = Validator::make($request->all(), [
+            'status' => 'sometimes|string',
+            'cost' => 'sometimes|numeric',
+            'user_id' => 'sometimes|numeric'
+        ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
                 'data' => $validator->errors()
             ]);
         }
-        
 
-        // $dataOrders->order_id =$id;
+        $dataOrders->fill($request->only(['status', 'cost', 'user_id']));
         $dataOrders->modified_at = now();
-        $dataOrders->status = $request->status;
-        $dataOrders->cost = $request->cost;
-        $dataOrders->user_id = $request->user_id;
-        $post = $dataOrders->save();
+        $dataOrders->save();
+
         return response()->json([
             'status' => 'success',
             'data' => 'update success!'
         ]);
     }
+
 
     public function destroy(string $id)
     {

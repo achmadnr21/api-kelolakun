@@ -67,18 +67,26 @@ class EmployeesController extends Controller
 
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $dataEmployee = Employees::find($id);
-        if(empty($dataEmployee)){
+        if (empty($dataEmployee)) {
             return response()->json([
                 'status' => 'success',
                 'data' => 'data not found'
             ], 404);
         }
-        $rules = [
-            
-        ];
-        $validator = Validator:: make($request->all(),$rules);
+
+        $validator = Validator::make($request->all(), [
+            'warehouse_id' => 'sometimes|numeric',
+            'name' => 'sometimes|string',
+            'username' => 'sometimes|string',
+            'password' => 'sometimes|string',
+            'role' => 'sometimes|string',
+            'email' => 'sometimes|email',
+            'phone_number' => 'sometimes|string'
+        ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
@@ -86,21 +94,16 @@ class EmployeesController extends Controller
             ]);
         }
 
-        // $dataEmployee->employee_id = $request->employee_id;
-        $dataEmployee->warehouse_id = $request->warehouse_id;
-        $dataEmployee->name = $request->name;
-        $dataEmployee->username = $request->username;
+        $dataEmployee->fill($request->only(['warehouse_id', 'name', 'username', 'password', 'role', 'email', 'phone_number']));
         $dataEmployee->password = bcrypt($request->password);
-        $dataEmployee->role = $request->role;
-        $dataEmployee->email = $request->email;
-        $dataEmployee->phone_number = $request->phone_number;
+        $dataEmployee->save();
 
-        $post = $dataEmployee->save();
         return response()->json([
             'status' => 'success',
             'data' => 'update success!'
         ]);
     }
+
 
 
     public function destroy(string $id)

@@ -66,38 +66,40 @@ class WarehouseController extends Controller
 
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $dataWarehouse = Warehouse::find($id);
-        if(empty($dataWarehouse)){
+        if (empty($dataWarehouse)) {
             return response()->json([
                 'status' => 'success',
                 'data' => 'data not found'
             ], 404);
         }
-        $rules = [
 
-        ];
-        $validator = Validator:: make($request->all(),$rules);
+        $validator = Validator::make($request->all(), [
+            'geo_lat' => 'sometimes|numeric',
+            'geo_lon' => 'sometimes|numeric',
+            'email' => 'sometimes|email',
+            'phone_number' => 'sometimes|string',
+            'address' => 'sometimes|string'
+        ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
                 'data' => $validator->errors()
             ]);
         }
-        
-        // $dataWarehouse->warehouse_id = $id;
-        $dataWarehouse->geo_lat = $request->geo_lat;
-        $dataWarehouse->geo_lon = $request->geo_lon;
-        $dataWarehouse->email = $request->email;
-        $dataWarehouse->phone_number = $request->phone_number;
-        $dataWarehouse->address = $request->address;
 
-        $post = $dataWarehouse->save();
+        $dataWarehouse->fill($request->only(['geo_lat', 'geo_lon', 'email', 'phone_number', 'address']));
+        $dataWarehouse->save();
+
         return response()->json([
             'status' => 'success',
             'data' => 'update success!'
         ]);
     }
+
 
 
     public function destroy(string $id)
