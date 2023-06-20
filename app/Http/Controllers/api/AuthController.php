@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Models\Employees;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\Contracts\HasApiTokens;
 
 class AuthController extends Controller
 {
@@ -68,7 +69,7 @@ class AuthController extends Controller
 
         $user = $request->employees();
         if ($user instanceof HasApiTokens) {
-            $user->currentAccessToken()->delete();
+            $user->currentAccessToken()->delete;
         }
 
         return response()->json([
@@ -89,7 +90,7 @@ class AuthController extends Controller
             return response()->json($validator->errors());
         }
 
-        $user = Users::create([
+        $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
@@ -114,22 +115,25 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = Users::where('username', $request->username)->firstOrFail();
+        $user = User::where('username', $request->username)->first();
+        $token = $user->createToken('bearer')->plainTextToken;
+        // dd($token);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        // dd($token);
 
         return response()->json([
             'message' => 'Login success',
             'access_token' => $token,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'user' => $user
         ]);
     }
 
     public function user_logout(Request $request)
     {
-        $user = $request->users();
+        $user = $request->user();
         if ($user instanceof HasApiTokens) {
-            $user->currentAccessToken()->delete();
+            $user->currentAccessToken()->delete;
         }
 
         return response()->json([
