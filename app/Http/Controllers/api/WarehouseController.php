@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WarehouseController extends Controller
 {
@@ -84,7 +85,6 @@ class WarehouseController extends Controller
             ]);
         }
         
-
         // $dataWarehouse->warehouse_id = $id;
         $dataWarehouse->geo_lat = $request->geo_lat;
         $dataWarehouse->geo_lon = $request->geo_lon;
