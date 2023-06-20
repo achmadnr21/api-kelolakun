@@ -119,34 +119,33 @@ class WarehouseController extends Controller
         ]);   
     }
 
-    public function addItem(Request $request){
+    public function addItem(Request $request)
+    {
         $warehouse_available = Warehouse::find($request->warehouse_id);
-        if($warehouse_available){
-            $query = DB::table('warehouse_package_details')->update(
-                ['package_id', $request->package_id],
-                ['warehouse_id', $request->warehouse_id],
-                ['qty', $request->qty],
-                ['modified_at', now()]
+        if ($warehouse_available) {
+            $query = DB::table('warehouse_package_details')->updateOrInsert(
+                [
+                    'package_id' => $request->package_id,
+                    'warehouse_id' => $request->warehouse_id
+                ],
+                [
+                    'qty' => $request->qty,
+                    'modified_at' => now()
+                ]
             );
-            return response()->json([
-                'status' => 'success',
-                'data' => 'additem success!'
-            ]);
-        }else{
-            $query = DB::table('warehouse_package_details')->insert(
-                ['package_id', $request->package_id],
-                ['warehouse_id', $request->warehouse_id],
-                ['qty', $request->qty],
-                ['modified_at', now()]
-            );
-            return response()->json([
-                'status' => 'success',
-                'data' => 'additem success!'
+        } else {
+            $query = DB::table('warehouse_package_details')->insert([
+                'package_id' => $request->package_id,
+                'warehouse_id' => $request->warehouse_id,
+                'qty' => $request->qty,
+                'modified_at' => now()
             ]);
         }
+
         return response()->json([
             'status' => 'success',
             'data' => 'additem success!'
         ]);
     }
+
 }

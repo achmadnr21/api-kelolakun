@@ -121,33 +121,27 @@ class OrdersController extends Controller
         ]);   
     }
 
-    public function addItem(Request $request){
+    public function addItem(Request $request)
+    {
         $warehouse_available = Orders::find($request->order_id);
-        if($warehouse_available){
-            $query = DB::table('order_details')->update(
-                ['order_id', $request->order_id],
-                ['package_id', $request->package_id],
-                ['qty', $request->qty]
+        if ($warehouse_available) {
+            $query = DB::table('order_details')->updateOrInsert(
+                ['order_id' => $request->order_id, 'package_id' => $request->package_id],
+                ['qty' => $request->qty]
             );
-            return response()->json([
-                'status' => 'success',
-                'data' => 'additem success!'
-            ]);
-        }else{
-            $query = DB::table('order_details')->insert(
-                ['order_id', $request->order_id],
-                ['package_id', $request->package_id],
-                ['qty', $request->qty]
-            );
-            return response()->json([
-                'status' => 'success',
-                'data' => 'additem success!'
+        } else {
+            $query = DB::table('order_details')->insert([
+                'order_id' => $request->order_id,
+                'package_id' => $request->package_id,
+                'qty' => $request->qty
             ]);
         }
+
         return response()->json([
             'status' => 'success',
             'data' => 'additem success!'
         ]);
     }
+
 }
 

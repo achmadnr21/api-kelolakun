@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class PackageController extends Controller
 {
     public function index()
@@ -33,7 +34,7 @@ class PackageController extends Controller
     public function store(Request $request){
         $dataPackage = new Package;
         $rules = [
-
+            'name' => 'required'
         ];
         $validator = Validator:: make($request->all(),$rules);
         if ($validator->fails()) {
@@ -48,6 +49,7 @@ class PackageController extends Controller
         // 'total_price'
 
         // $dataPackage->package_id = $request->package_id;
+        $dataPackage->name = $request->name;
         $dataPackage->total_weight = $request->total_weight;
         $dataPackage->total_price = $request->total_price;
 
@@ -70,6 +72,7 @@ class PackageController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string',
             'total_weight' => 'sometimes|numeric',
             'total_price' => 'sometimes|numeric'
         ]);
@@ -109,34 +112,29 @@ class PackageController extends Controller
         ]);   
     }
 
-    public function addItem(Request $request){
+    public function addItem(Request $request)
+    {
         $warehouse_available = Package::find($request->package_id);
-        if($warehouse_available){
-            $query = DB::table('package_item_details')->update(
-                ['package_id', $request->package_id],
-                ['item_id', $request->item_id],
-                ['qty', $request->qty]
+        if ($warehouse_available) {
+            $query = DB::table('package_item_details')->updateOrInsert(
+                ['package_id' => $request->package_id, 'item_id' => $request->item_id],
+                ['qty' => $request->qty]
             );
             return response()->json([
                 'status' => 'success',
                 'data' => 'additem success!'
             ]);
-        }else{
-            $query = DB::table('package_item_details')->insert(
-                ['package_id', $request->package_id],
-                ['item_id', $request->item_id],
-                ['qty', $request->qty]
-            );
+        } else {
+            $query = DB::table('package_item_details')->insert([
+                'package_id' => $request->package_id,
+                'item_id' => $request->item_id,
+                'qty' => $request->qty
+            ]);
             return response()->json([
                 'status' => 'success',
                 'data' => 'additem success!'
             ]);
         }
-
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => 'additem success!'
-        ]);
     }
+
 }
