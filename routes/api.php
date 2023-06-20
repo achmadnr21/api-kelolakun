@@ -96,9 +96,9 @@ Route::put('/item/update/{id}', [App\Http\Controllers\api\ItemController::class,
 Route::delete('/item/delete/{id}', [App\Http\Controllers\api\ItemController::class, 'destroy']);
 
 // PACKAGE
-Route::get('/package/index', [App\Http\Controllers\api\ItemController::class, 'index']);
-Route::get('/package/select/{id}', [App\Http\Controllers\api\ItemController::class, 'show']);
-Route::post('/package/insert/', [App\Http\Controllers\api\ItemController::class, 'store']);
-Route::put('/package/update/{id}', [App\Http\Controllers\api\ItemController::class, 'update']);
-Route::delete('/package/delete/{id}', [App\Http\Controllers\api\ItemController::class, 'destroy']);
-Route::post('/package/additem', [App\Http\Controllers\api\ItemController::class, 'addItem']);
+Route::get('/package/index', [App\Http\Controllers\api\PackageController::class, 'index']);
+Route::get('/package/select/{id}', [App\Http\Controllers\api\PackageController::class, 'show']);
+Route::post('/package/insert/', [App\Http\Controllers\api\PackageController::class, 'store']);
+Route::put('/package/update/{id}', [App\Http\Controllers\api\PackageController::class, 'update']);
+Route::delete('/package/delete/{id}', [App\Http\Controllers\api\PackageController::class, 'destroy']);
+Route::post('/package/additem', [App\Http\Controllers\api\PackageController::class, 'addItem']);
